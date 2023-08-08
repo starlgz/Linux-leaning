@@ -5,3 +5,8 @@
 curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/install_docker.sh && chmod +x install_docker.sh && ./install_docker.sh && rm install_docker.sh
 
 ```
+# 调试
+```
+curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/docker-use.sh && chmod +x docker-use.sh && ./docker-use.sh && rm docker-use.sh
+
+```

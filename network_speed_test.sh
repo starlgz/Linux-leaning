@@ -1,16 +1,9 @@
 #!/bin/bash
 
-# 安装speedtest-cli（如果未安装）
-if ! command -v speedtest &>/dev/null; then
-    echo "安装speedtest-cli..."
-    sudo apt update
-    sudo apt install speedtest-cli -y
-fi
-
-# 测速
+# 测速函数
 function network_speed_test() {
     echo "开始测试服务器：$1"
-    speedtest --server $2
+    speedtest-cli --server $2
     echo "==============================="
 }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Author: startlgz
+# Author: 满天繁星
 
 # 开启BBR
 enable_bbr() {
@@ -8,13 +8,13 @@ enable_bbr() {
     
     # 检查是否已经开启BBR
     if lsmod | grep "tcp_bbr" &> /dev/null; then
-        echo "BBR已经开启。"
+        echo -e "\e[32mBBR已经开启。\e[0m"
     else
         echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
         echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
         sysctl -p
         
-        echo "BBR已开启。"
+        echo -e "\e[32mBBR已开启。\e[0m"
     fi
 }
 
@@ -24,23 +24,35 @@ disable_bbr() {
     
     # 检查是否已经关闭BBR
     if ! lsmod | grep "tcp_bbr" &> /dev/null; then
-        echo "BBR已经关闭。"
+        echo -e "\e[32mBBR已经关闭。\e[0m"
     else
         sed -i '/net\.core\.default_qdisc = fq/d' /etc/sysctl.conf
         sed -i '/net\.ipv4\.tcp_congestion_control = bbr/d' /etc/sysctl.conf
         sysctl -p
         
-        echo "BBR已关闭。"
+        echo -e "\e[32mBBR已关闭。\e[0m"
+    fi
+}
+
+# 检查BBR状态
+check_bbr_status() {
+    echo "正在检查BBR状态..."
+    
+    if lsmod | grep "tcp_bbr" &> /dev/null; then
+        echo -e "\e[32mBBR已经开启。\e[0m"
+    else
+        echo -e "\e[32mBBR未开启。\e[0m"
     fi
 }
 
 # 主菜单
 while true; do
     clear
-    echo "BBR管理脚本"
-    echo "1. 开启BBR"
-    echo "2. 关闭BBR"
-    echo "3. 退出"
+    echo -e "\e[33mBBR管理脚本\e[0m"
+    echo -e "1. \e[34m开启BBR\e[0m"
+    echo -e "2. \e[34m关闭BBR\e[0m"
+    echo -e "3. \e[34m检查BBR状态\e[0m"
+    echo -e "4. \e[31m退出\e[0m"
     read -p "请选择一个选项： " choice
     
     case $choice in
@@ -53,6 +65,10 @@ while true; do
             read -p "按回车键继续..."
             ;;
         3)
+            check_bbr_status
+            read -p "按回车键继续..."
+            ;;
+        4)
             echo "正在退出..."
             exit 0
             ;;

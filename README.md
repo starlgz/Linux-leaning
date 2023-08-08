@@ -9,3 +9,8 @@ docker的便捷命令
 curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/docker-use.sh && chmod +x docker-use.sh && ./docker-use.sh && rm docker-use.sh
 
 ```
+bbr便捷脚本
+```
+curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/bbr_manager.sh && chmod +x bbr_manager.sh && ./bbr_manager.sh && rm bbr_manager.sh
+
+```

@@ -1,31 +1,26 @@
 #!/bin/bash
 
-# 获取所有可用的测速服务器列表
-function get_speedtest_servers() {
-    speedtest-cli --list | grep -oP '(?<=\[\d+\] ).*(?= -)'
-}
+# 安装speedtest-cli（如果未安装）
+if ! command -v speedtest &>/dev/null; then
+    echo "安装speedtest-cli..."
+    sudo apt update
+    sudo apt install speedtest-cli -y
+fi
 
-# 使用speedtest-cli在指定服务器上测量网络速度
+# 测速
 function network_speed_test() {
-    local server_id=$1
-    local server_name=$2
-
-    echo "正在测试服务器：$server_name [$server_id]..."
-    speedtest-cli --server $server_id
-    echo "====================================="
+    echo "开始测试服务器：$1"
+    speedtest --server $2
+    echo "==============================="
 }
 
-# 执行网络测速
+# 选择测速点
 function main() {
-    local servers=$(get_speedtest_servers)
-    local IFS=$'\n'
-
-    for server_info in $servers; do
-        local server_id=$(echo $server_info | grep -oP '^\[\d+\]' | tr -d '[]')
-        local server_name=$(echo $server_info | grep -oP '(?<=- ).*$')
-
-        network_speed_test $server_id "$server_name"
-    }
+    network_speed_test "中国上海移动" 5862
+    network_speed_test "中国北京电信" 3633
+    network_speed_test "中国广州电信" 5083
+    network_speed_test "新加坡" 18220
+    network_speed_test "美国西部" 5117
 }
 
 main

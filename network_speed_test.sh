@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# 安装speedtest-cli（如果未安装）
+# 安装指定版本的speedtest-cli（如果未安装）
 if ! command -v speedtest &>/dev/null; then
     echo "安装speedtest-cli..."
     sudo apt update
-    sudo apt install speedtest-cli -y
+    sudo apt install python3-pip -y
+    sudo pip3 install speedtest-cli==2.1.1
 fi
 
 # 测速函数

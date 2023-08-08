@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# 检查是否已安装 Docker
+function check_docker_installed() {
+    if command -v docker &>/dev/null; then
+        echo "Docker 已安装。"
+        docker_version=$(docker --version | awk '{print $3}')
+        echo "Docker 版本：$docker_version"
+        return 0
+    else
+        echo "Docker 未安装。"
+        return 1
+    fi
+}
+
 # 安装 Docker Engine
 function install_docker_engine() {
     echo "安装 Docker Engine..."
@@ -20,7 +33,8 @@ function install_docker_compose() {
 
 # 主函数
 function main() {
-    echo "欢迎使用 Docker 安装脚本！"
+    check_docker_installed
+
     echo "请选择安装选项："
     echo "1. 安装 Docker Engine"
     echo "2. 安装 Docker Compose"

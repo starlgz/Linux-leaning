@@ -2,7 +2,6 @@
 捣鼓一些便捷的小脚本
 # 测速脚本
 ```
-curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3
-
+curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/network_speed_test.sh && chmod +x network_speed_test.sh && ./network_speed_test.sh && rm network_speed_test.sh
 
 ```

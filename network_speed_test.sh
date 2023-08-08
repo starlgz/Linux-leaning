@@ -1,36 +1,56 @@
 #!/bin/bash
 
-# 安装speedtest-cli（如果未安装）
-if ! command -v speedtest &>/dev/null; then
-    echo "安装speedtest-cli..."
+# 安装 Docker Engine
+function install_docker_engine() {
+    echo "安装 Docker Engine..."
     sudo apt update
-    sudo apt install speedtest-cli -y
-fi
-
-# 测速函数
-function network_speed_test() {
-    local server_name="$1"
-    local server_id="$2"
-
-    echo "正在测试服务器：$server_name [$server_id]..."
-    speedtest-cli --server "$server_id" > /dev/null
-    echo "====================================="
+    sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install docker-ce docker-ce-cli containerd.io -y
 }
 
-# 执行网络测速
-function main() {
-    # 手动选择测速服务器，包含3个中国服务器和其他一些国际服务器
-    local servers=(
-        "中国上海移动" "30487"
-        "中国北京电信" "35403"
-        "中国广州电信" "5083"
-        "新加坡" "1902"
-        "美国西部" "6739"
-    )
+# 安装 Docker Compose
+function install_docker_compose() {
+    echo "安装 Docker Compose..."
+    sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+}
 
-    for ((i=0; i<${#servers[@]}; i+=2)); do
-        network_speed_test "${servers[i]}" "${servers[i+1]}"
-    done
+# 主函数
+function main() {
+    echo "欢迎使用 Docker 安装脚本！"
+    echo "请选择安装选项："
+    echo "1. 安装 Docker Engine"
+    echo "2. 安装 Docker Compose"
+    echo "3. 安装 Docker Engine 和 Docker Compose"
+    echo "4. 退出"
+
+    read -p "请输入选项的编号： " choice
+
+    case "$choice" in
+        1)
+            install_docker_engine
+            ;;
+        2)
+            install_docker_compose
+            ;;
+        3)
+            install_docker_engine
+            install_docker_compose
+            ;;
+        4)
+            echo "退出安装脚本。"
+            exit 0
+            ;;
+        *)
+            echo "无效的选项编号。"
+            exit 1
+            ;;
+    esac
+
+    echo "安装完成！请注销并重新登录以使 Docker 用户组更改生效。"
 }
 
 main

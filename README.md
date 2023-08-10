@@ -16,5 +16,5 @@ curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/bbr_mana
 ```
 screen的便捷脚本
 ```
-curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/screen.sh && chmod +x screen.sh && ./screen.sh && rm screen.sh
+curl -O https://raw.githubusercontent.com/starlgz/Linux-leaning/main/screen.sh && chmod +x screen.sh && ./screen.sh && rm screen.sh
 ```

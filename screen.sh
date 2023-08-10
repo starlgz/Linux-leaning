@@ -8,6 +8,7 @@ NC='\033[0m'
 
 # 显示菜单选项
 function show_menu() {
+  echo -e "${YELLOW}作者：满天繁星${NC}"
   echo -e "${GREEN}1. 创建一个新的screen会话${NC}"
   echo -e "${GREEN}2. 列出所有已存在的screen会话${NC}"
   echo -e "${GREEN}3. 进入一个已存在的screen会话${NC}"
@@ -18,8 +19,13 @@ function show_menu() {
   echo -e "${GREEN}8. 保存和恢复screen会话状态${NC}"
   echo -e "${GREEN}9. 配置screen会话的选项和参数${NC}"
   echo -e "${GREEN}10. 显示帮助和文档${NC}"
-  echo -e "${YELLOW}作者：满天繁星${NC}"
   echo -e "${RED}0. 退出脚本${NC}"
+}
+
+# 列出所有已存在的screen会话并编号
+function list_sessions() {
+  echo "所有已存在的screen会话："
+  screen -ls | grep -o '[0-9]*\.[^ ]*' | awk '{print NR-1". "$0}'
 }
 
 # 读取用户输入
@@ -35,10 +41,12 @@ function do_action() {
       screen -S $session_name
       ;;
     2)
-      screen -ls
+      list_sessions
       ;;
     3)
-      read -p "请输入要进入的会话名称：" session_name
+      list_sessions
+      read -p "请输入要进入的会话编号：" session_number
+      session_name=$(screen -ls | grep -o '[0-9]*\.[^ ]*' | awk -v n=$session_number 'NR-1==n{print $2}')
       screen -r $session_name
       ;;
     4)
@@ -76,9 +84,11 @@ function do_action() {
       ;;
     10)
       echo "请参考以下文档和教程以深入了解更多关于screen的功能和用法："
-      echo "- 程序员真的很少写代码吗？ - 知乎 [1]"
+      echo "- 程序员真的很少写代码吗？ - 知乎 [4]"
       echo "- Bash脚本初学者完整教程 - Linux迷 [2]"
-      echo "- 如何利用ChatGPT帮你写代码？-腾讯云开发者社区 - Tencent [5]"
+      echo "- 如何利用ChatGPT帮你写代码？-腾讯云开发者社区 - Tencent [3]"
+      echo "- Shell 编程(七)：脚本实战-腾讯云开发者社区 [5]"
+      echo "- Ubuntu下如何编辑开始菜单?Ubuntu下编辑开始菜单的方法 - 中企动力 [1]"
       ;;
     0)
       exit 0

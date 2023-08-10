@@ -14,3 +14,8 @@ bbr便捷脚本
 curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/bbr_manager.sh && chmod +x bbr_manager.sh && ./bbr_manager.sh && rm bbr_manager.sh
 
 ```
+screen的便捷脚本
+```
+curl -sO https://raw.githubusercontent.com/starlgz/Linux-leaning/master/screen.sh && chmod +x screen.sh && ./screen.sh && rm screen.sh
+
+```

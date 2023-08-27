@@ -24,6 +24,22 @@ function delete_rule() {
     echo "规则已删除。"
 }
 
+function open_ports() {
+    read -p "请输入要开放的端口号，用空格分隔: " ports
+    read -p "请输入协议 (tcp/udp): " protocol
+
+    # 关闭所有端口
+    sudo nft add rule ip filter input drop
+
+    # 开放指定的端口
+    for port in $ports; do
+        sudo nft add rule ip filter input ip dport $port $protocol accept
+        echo "已开放端口 $port/$protocol。"
+    done
+
+    echo "已开放以上端口，并关闭其他所有端口。"
+}
+
 while true; do
     clear
     echo "===== nftables 防火墙管理菜单 ====="
@@ -34,10 +50,11 @@ while true; do
     echo "5. 加载配置文件"
     echo "6. 创建新表格"
     echo "7. 创建新链"
-    echo "8. 显示帮助"
-    echo "9. 退出"
+    echo "8. 开放多个端口并关闭其他端口"
+    echo "9. 显示帮助"
+    echo "10. 退出"
 
-    read -p "请选择操作 [1-9]: " choice
+    read -p "请选择操作 [1-10]: " choice
 
     case $choice in
         1)
@@ -69,9 +86,12 @@ while true; do
             echo "链 $new_chain 已创建。"
             ;;
         8)
-            echo "帮助信息..."
+            open_ports
             ;;
         9)
+            echo "帮助信息..."
+            ;;
+        10)
             echo "再见！"
             exit 0
             ;;

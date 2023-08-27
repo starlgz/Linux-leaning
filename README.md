@@ -18,3 +18,7 @@ screen的便捷脚本
 ```
 curl -O https://raw.githubusercontent.com/starlgz/Linux-leaning/main/screen.sh && chmod +x screen.sh && ./screen.sh && rm screen.sh
 ```
+fhq的便捷脚本
+```
+curl -O https://raw.githubusercontent.com/starlgz/Linux-leaning/main/fhq.sh && chmod +x fhq.sh && ./fhq.sh && rm fhq.sh
+```

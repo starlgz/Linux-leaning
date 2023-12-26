@@ -23,3 +23,7 @@ fhq的便捷脚本
 ```
 curl -O https://raw.githubusercontent.com/starlgz/Linux-leaning/main/fhq.sh && chmod +x fhq.sh && ./fhq.sh && rm fhq.sh
 ```
+wireguard的便捷脚本
+```
+curl -O https://github.com/starlgz/Linux-leaning/blob/main/install_wireguard.sh && chmod +x install_wireguard.sh && ./install_wireguard.sh && rm install_wireguard.sh
+```

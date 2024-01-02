@@ -36,7 +36,7 @@ download_video_menu() {
 
 main_menu() {
     while true; do
-        echo "=== yt-dlp 使用功能菜单 ==="
+        echo "=== yt-dlp 视频下载菜单 ==="
         echo "1. 下载视频"
         echo "2. 查看视频格式和质量"
         echo "3. 退出程序"

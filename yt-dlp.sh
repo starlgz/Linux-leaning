@@ -8,7 +8,7 @@ download_video() {
 
 list_formats() {
     read -p "请输入视频链接: " url
-    $YT_DLP_COMMAND --list-formats "$url"
+    $YT_DLP_COMMAND -F "$url"
 }
 
 download_video_menu() {

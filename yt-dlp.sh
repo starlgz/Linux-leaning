@@ -1,14 +1,13 @@
 #!/bin/bash
 
-YT_DLP_COMMAND="yt_dlp"
+YT_DLP_COMMAND="yt-dlp"
 
 download_video() {
     $YT_DLP_COMMAND "$1" $2
 }
 
 list_formats() {
-    read -p "请输入视频链接: " url
-    $YT_DLP_COMMAND -F "$url"
+    $YT_DLP_COMMAND -F "$1"
 }
 
 download_video_menu() {
@@ -48,7 +47,8 @@ main_menu() {
                 download_video_menu
                 ;;
             2)
-                list_formats
+                read -p "请输入视频链接: " url
+                list_formats "$url"
                 ;;
             3)
                 echo "退出程序。"

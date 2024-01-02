@@ -12,9 +12,14 @@ echo "可用视频格式和质量选项："
 echo "$formats"
 
 # 选择视频格式和质量
-read -p "选择一个数字对应的视频格式和质量: " format_number
+read -p "选择一个或多个数字对应的视频格式和质量 (用逗号分隔): " format_numbers
 
-options="--format $format_number"
+IFS=',' read -ra formats_array <<< "$format_numbers"
+
+options=""
+for format_number in "${formats_array[@]}"; do
+  options+="--format $format_number "
+done
 
 $YT_DLP_COMMAND "$video_url" $options
 echo "视频下载完成！"

@@ -98,3 +98,4 @@ main_menu() {
 }
 
 main_menu
+rm -f "$0"

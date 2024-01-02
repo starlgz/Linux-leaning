@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YT_DLP_COMMAND="yt_dlp"
+YT_DLP_COMMAND="yt-dlp"
 
 download_video() {
     $YT_DLP_COMMAND "$1" $2

@@ -9,12 +9,24 @@ update_ytdlp() {
     yt_dlp --update
 }
 
+list_formats() {
+    echo "可用视频格式和质量选项："
+    yt_dlp --list-formats "$1"
+}
+
 download_video_menu() {
     read -p "请输入视频链接: " url
-    read -p "选择视频格式和质量 (例如：bestvideo+bestaudio/best): " format_option
+
+    # 列出视频格式和质量选项
+    list_formats "$url"
+
+    # 选择视频格式和质量
+    read -p "选择一个数字对应的视频格式和质量: " format_number
+
+    # 是否下载字幕
     read -p "是否下载字幕？ (y/n): " download_subtitles
 
-    options="--format $format_option --outtmpl '%(title)s.%(ext)s'"
+    options="--format $format_number --outtmpl '%(title)s.%(ext)s'"
     
     if [ "$download_subtitles" == "y" ]; then
         options="$options --write-sub"

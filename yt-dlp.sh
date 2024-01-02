@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YT_DLP_COMMAND="yt-dlp"
+YT_DLP_COMMAND="yt_dlp"
 
 download_video() {
     $YT_DLP_COMMAND "$1" $2
@@ -32,9 +32,9 @@ download_video_menu() {
 
         # 选择字幕格式
         read -p "选择一个数字对应的字幕格式: " subtitle_format
-        options="--format $format_number --outtmpl '%(title)s.%(ext)s' --write-sub --sub-format $subtitle_format"
+        options="-o '%(title)s.%(ext)s' --format $format_number --write-sub --sub-format $subtitle_format"
     else
-        options="--format $format_number --outtmpl '%(title)s.%(ext)s'"
+        options="-o '%(title)s.%(ext)s' --format $format_number"
     fi
 
     download_video "$url" "$options"

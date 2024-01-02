@@ -27,3 +27,8 @@ wireguard的便捷脚本
 ```
 curl -O https://github.com/starlgz/Linux-leaning/blob/main/install_wireguard.sh && chmod +x install_wireguard.sh && ./install_wireguard.sh && rm install_wireguard.sh
 ```
+yt-dlp的便捷脚本
+```
+wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/yt-dlp.sh && chmod +x yt-dlp.sh && ./yt-dlp.sh
+
+```

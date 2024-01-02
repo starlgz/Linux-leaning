@@ -1,17 +1,31 @@
 #!/bin/bash
 
+YT_DLP_COMMAND="yt_dlp"
+
 download_video() {
-    yt_dlp "$1" $2
+    $YT_DLP_COMMAND "$1" $2
 }
 
 update_ytdlp() {
     echo "正在检查并更新 yt-dlp..."
-    yt_dlp --update
+    $YT_DLP_COMMAND --update
 }
 
 list_formats() {
     echo "可用视频格式和质量选项："
-    yt_dlp --list-formats "$1"
+    $YT_DLP_COMMAND --list-formats "$1"
+}
+
+download_subtitles() {
+    read -p "请输入视频链接: " url
+
+    # 选择字幕格式
+    read -p "选择一个数字对应的字幕格式: " subtitle_format
+
+    options="--write-sub --sub-format $subtitle_format --skip-download"
+    
+    download_video "$url" "$options"
+    echo "字幕下载完成！"
 }
 
 download_video_menu() {
@@ -29,11 +43,11 @@ download_video_menu() {
     options="--format $format_number --outtmpl '%(title)s.%(ext)s'"
     
     if [ "$download_subtitles" == "y" ]; then
-        options="$options --write-sub"
+        download_subtitles
     fi
 
     download_video "$url" "$options"
-    echo "下载完成！"
+    echo "视频下载完成！"
 }
 
 update_ytdlp_menu() {
@@ -71,23 +85,27 @@ main_menu() {
     while true; do
         echo "=== yt-dlp 使用功能菜单 ==="
         echo "1. 下载视频"
-        echo "2. 更新 yt-dlp"
-        echo "3. 缩略图相关操作"
-        echo "4. 退出程序"
+        echo "2. 下载字幕"
+        echo "3. 更新 yt-dlp"
+        echo "4. 缩略图相关操作"
+        echo "5. 退出程序"
         
-        read -p "请选择操作 (1-4): " choice
+        read -p "请选择操作 (1-5): " choice
         
         case $choice in
             1)
                 download_video_menu
                 ;;
             2)
-                update_ytdlp_menu
+                download_subtitles
                 ;;
             3)
-                thumbnail_menu
+                update_ytdlp_menu
                 ;;
             4)
+                thumbnail_menu
+                ;;
+            5)
                 exit_menu
                 ;;
             *)

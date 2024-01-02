@@ -11,9 +11,42 @@ formats=$($YT_DLP_COMMAND -F "$video_url")
 echo "可用视频格式和质量选项："
 echo "$formats"
 
-# 选择视频格式和质量
-read -p "选择一个数字对应的视频格式和质量: " video_format_number
+# 用户选择视频格式和质量
+read -p "选择视频格式和质量 (如 22, 299+140): " video_format_number
 
-# 下载视频和音频并合并
-download_options="--format $video_format_number -o '%(title)s.%(ext)s'"
-$YT_DLP_COMMAND "$video_url" $download_options
+# 选择功能
+read -p "选择功能 (1-6): " choice
+
+case $choice in
+    1)
+        # 只下载音频
+        $YT_DLP_COMMAND -f140 "$video_url"
+        ;;
+    2)
+        # 下载音频并转换成mp3
+        $YT_DLP_COMMAND -f140 -x --audio-format mp3 "$video_url"
+        ;;
+    3)
+        # 只下载视频
+        $YT_DLP_COMMAND -f22 "$video_url"
+        ;;
+    4)
+        # 下载指定分辨率视频+音频
+        $YT_DLP_COMMAND -f"$video_format_number" "$video_url"
+        ;;
+    5)
+        # 下载最佳mp4视频+最佳m4a音频并合成mp4
+        $YT_DLP_COMMAND -f 'bv[ext=mp4]+ba[ext=m4a]' --embed-metadata --merge-output-format mp4 "$video_url"
+        ;;
+    6)
+        # 指定文件名下载
+        read -p "请输入文件名 (不带扩展名): " file_name
+        $YT_DLP_COMMAND -f"$video_format_number" "$video_url" -o "$file_name.mp4"
+        ;;
+    *)
+        echo "无效的选择，请重新运行脚本。"
+        exit 1
+        ;;
+esac
+
+echo "操作完成！"

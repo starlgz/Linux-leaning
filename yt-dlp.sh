@@ -10,6 +10,10 @@ list_formats() {
     $YT_DLP_COMMAND -F "$1"
 }
 
+list_subs() {
+    $YT_DLP_COMMAND --list-subs "$1"
+}
+
 download_video_menu() {
     read -p "请输入视频链接: " url
 
@@ -22,11 +26,15 @@ download_video_menu() {
     # 是否下载字幕
     read -p "是否下载字幕？ (y/n): " download_subtitles
 
-    options="--format $format_number --outtmpl '%(title)s.%(ext)s'"
-    
     if [ "$download_subtitles" == "y" ]; then
+        # 列出字幕格式选项
+        list_subs "$url"
+
+        # 选择字幕格式
         read -p "选择一个数字对应的字幕格式: " subtitle_format
-        options="$options --write-sub --sub-format $subtitle_format"
+        options="--format $format_number --outtmpl '%(title)s.%(ext)s' --write-sub --sub-format $subtitle_format"
+    else
+        options="--format $format_number --outtmpl '%(title)s.%(ext)s'"
     fi
 
     download_video "$url" "$options"
@@ -38,9 +46,10 @@ main_menu() {
         echo "=== yt-dlp 视频下载菜单 ==="
         echo "1. 下载视频"
         echo "2. 查看视频格式和质量"
-        echo "3. 退出程序"
+        echo "3. 查看字幕格式"
+        echo "4. 退出程序"
         
-        read -p "请选择操作 (1-3): " choice
+        read -p "请选择操作 (1-4): " choice
         
         case $choice in
             1)
@@ -51,6 +60,10 @@ main_menu() {
                 list_formats "$url"
                 ;;
             3)
+                read -p "请输入视频链接: " url
+                list_subs "$url"
+                ;;
+            4)
                 echo "退出程序。"
                 exit 0
                 ;;

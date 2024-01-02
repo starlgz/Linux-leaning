@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YT_DLP_COMMAND="yt_dlp"
+YT_DLP_COMMAND="yt-dlp"
 
 if [ $# -eq 0 ]; then
     echo "请输入视频链接"

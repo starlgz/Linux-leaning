@@ -14,7 +14,16 @@ echo "$formats"
 # 用户选择视频格式和质量
 read -p "选择视频格式和质量 (如 22, 299+140): " video_format_number
 
-# 选择功能
+# 列出功能选项（带颜色）
+echo -e "\e[1;33m功能选项：\e[0m"
+echo -e "1. \e[32m只下载音频\e[0m"
+echo -e "2. \e[32m下载音频并转换成mp3\e[0m"
+echo -e "3. \e[32m只下载视频\e[0m"
+echo -e "4. \e[32m下载指定分辨率视频+音频\e[0m"
+echo -e "5. \e[32m下载最佳mp4视频+最佳m4a音频并合成mp4\e[0m"
+echo -e "6. \e[32m指定文件名下载\e[0m"
+
+# 用户选择功能
 read -p "选择功能 (1-6): " choice
 
 case $choice in

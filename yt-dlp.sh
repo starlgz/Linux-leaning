@@ -12,8 +12,8 @@ update_ytdlp() {
 }
 
 list_formats() {
-    echo "可用视频格式和质量选项："
-    $YT_DLP_COMMAND --list-formats "$1"
+    read -p "请输入视频链接: " url
+    $YT_DLP_COMMAND --list-formats "$url"
 }
 
 download_subtitles() {

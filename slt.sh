@@ -5,7 +5,20 @@ YT_DLP_COMMAND="yt-dlp"
 echo "请输入视频链接:"
 read -r video_url
 
-# 下载缩略图（格式为jpg）
-$YT_DLP_COMMAND --output "%(title)s_thumbnail.jpg" --write-thumbnail "$video_url"
+# 获取视频缩略图 URL
+thumbnail_url=$($YT_DLP_COMMAND --get-thumbnail "$video_url")
 
-echo "缩略图已下载！"
+# 打印缩略图 URL
+echo "视频缩略图 URL: $thumbnail_url"
+
+# 用户选择是否下载缩略图，默认下载
+read -p "是否下载缩略图？ (y/n, 默认为y): " download_thumbnail
+download_thumbnail=${download_thumbnail:-y}
+
+if [ "$download_thumbnail" == "y" ]; then
+    # 下载缩略图
+    $YT_DLP_COMMAND --write-thumbnail --skip-download "$video_url"
+    echo "缩略图已下载！"
+else
+    echo "不下载缩略图。"
+fi

@@ -17,7 +17,7 @@ download_thumbnail=${download_thumbnail:-y}
 
 if [ "$download_thumbnail" == "y" ]; then
     # 下载缩略图
-    $YT_DLP_COMMAND --write-thumbnail --skip-download "$video_url"
+    $YT_DLP_COMMAND --skip-download --get-thumbnail "$video_url"
     echo "缩略图已下载！"
 else
     echo "不下载缩略图。"

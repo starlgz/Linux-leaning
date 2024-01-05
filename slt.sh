@@ -1,15 +1,16 @@
 #!/bin/bash
 
+# 设置yt-dlp命令
 YT_DLP_COMMAND="yt-dlp"
+# 设置ffmpeg命令
+FFMPEG_COMMAND="ffmpeg"
 
+# 提示用户输入视频链接
 echo "请输入视频链接:"
 read -r video_url
 
 # 获取视频缩略图 URL
 thumbnail_url=$($YT_DLP_COMMAND --get-thumbnail "$video_url")
-
-# 提取缩略图文件名
-thumbnail_filename=$(basename "$thumbnail_url")
 
 # 打印缩略图 URL
 echo "视频缩略图 URL: $thumbnail_url"
@@ -19,13 +20,21 @@ read -p "是否下载缩略图？ (y/n, 默认为y): " download_thumbnail
 download_thumbnail=${download_thumbnail:-y}
 
 if [ "$download_thumbnail" == "y" ]; then
-    # 下载缩略图到 /root 目录下，并保留原始文件名
-    $YT_DLP_COMMAND --skip-download --get-thumbnail "$video_url" -o "/root/$thumbnail_filename"
-    
-    if [ $? -eq 0 ]; then
-        echo "缩略图已下载到 /root/$thumbnail_filename！"
-    else
-        echo "下载缩略图失败。"
+    # 下载缩略图
+    $YT_DLP_COMMAND --write-thumbnail --skip-download "$video_url"
+    echo "缩略图已下载！"
+
+    # 检查缩略图格式并转换为JPEG
+    thumbnail_extension="${thumbnail_url##*.}"
+    if [ "$thumbnail_extension" == "webp" ]; then
+        thumbnail_filename="${thumbnail_url##*/}"
+        thumbnail_filename="${thumbnail_filename%.*}"
+        jpeg_filename="$thumbnail_filename.jpg"
+        
+        # 使用ffmpeg转换为JPEG
+        $FFMPEG_COMMAND -i "$thumbnail_filename.webp" "$jpeg_filename"
+        
+        echo "缩略图已转换为JPEG格式: $jpeg_filename"
     fi
 else
     echo "不下载缩略图。"

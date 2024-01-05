@@ -16,9 +16,14 @@ read -p "是否下载缩略图？ (y/n, 默认为y): " download_thumbnail
 download_thumbnail=${download_thumbnail:-y}
 
 if [ "$download_thumbnail" == "y" ]; then
-    # 下载缩略图
-    $YT_DLP_COMMAND --skip-download --get-thumbnail "$video_url"
-    echo "缩略图已下载！"
+    # 下载缩略图到 /root 目录下
+    $YT_DLP_COMMAND --skip-download --get-thumbnail "$video_url" -o "/root/custom_thumbnail.jpg"
+    
+    if [ $? -eq 0 ]; then
+        echo "缩略图已下载到 /root/custom_thumbnail.jpg！"
+    else
+        echo "下载缩略图失败。"
+    fi
 else
     echo "不下载缩略图。"
 fi

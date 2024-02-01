@@ -32,3 +32,9 @@ yt-dlp的便捷脚本
 wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/yt-dlp.sh && chmod +x yt-dlp.sh && ./yt-dlp.sh && rm yt-dlp.sh
 
 ```
+
+yt-dlp的便捷脚本
+```
+wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/slt.sh && chmod +x slt.sh && ./slt.sh && rm slt.sh
+
+```

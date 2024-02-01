@@ -33,7 +33,7 @@ wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/yt-dlp.sh && c
 
 ```
 
-yt-dlp的便捷脚本
+slt的便捷脚本
 ```
 wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/slt.sh && chmod +x slt.sh && ./slt.sh && rm slt.sh
 

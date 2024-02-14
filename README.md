@@ -38,3 +38,9 @@ slt的便捷脚本
 wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/slt.sh && chmod +x slt.sh && ./slt.sh && rm slt.sh
 
 ```
+
+download_audio.sh的便捷脚本
+```
+wget https://raw.githubusercontent.com/starlgz/Linux-leaning/main/download_audio.sh && chmod +x download_audio.sh && ./download_audio.sh && rm download_audio.sh
+
+```

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YT_DLP_COMMAND="yt-dlp"
+YT_DLP_COMMAND="yt-dlp --cookies /root/cookies.txt"
 
 echo "请输入视频链接:"
 read -r video_url
